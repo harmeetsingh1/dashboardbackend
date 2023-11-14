@@ -6,6 +6,8 @@ const csv = require("fast-csv");
 const cors = require("cors");
 const jwt = require('jsonwebtoken');
 
+require('dotenv').config();
+
 const app = express();
 const PORT = 3001;
 
@@ -16,11 +18,11 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const dbConfig = {
-  host: "localhost",
-  port: 4306,
-  user: "root",
-  password: "",
-  database: "lms",
+  host: process.env.DB_HOST || "localhost",
+  port: process.env.DB_PORT || 4306,
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_DATABASE || "lms",
 };
 
 app.post("/upload", upload.single("file"), async (req, res) => {
